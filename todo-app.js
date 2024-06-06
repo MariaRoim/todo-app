@@ -35,14 +35,14 @@
     return list;
   }
 
-  function createTodoItem(name) {
+  function createTodoItem(taskObj) {
     let item = document.createElement('li');
     let buttonGroup = document.createElement('div');
     let doneButton = document.createElement('button');
     let deleteButton = document.createElement('button');
 
     item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-    item.textContent = name;
+    item.textContent = taskObj.name;
 
     buttonGroup.classList.add('btn-group', 'btn-group-sm');
     doneButton.classList.add('btn', 'btn-success');
@@ -77,10 +77,17 @@
         return;
       }
 
-      let todoItem = createTodoItem(todoItemForm.input.value);
+      let taskObj = {
+        name: todoItemForm.input.value,
+        done: false,
+      }
+      console.log(taskObj)
+
+      let todoItem = createTodoItem(taskObj);
       
       todoItem.doneButton.addEventListener('click', function() {
         todoItem.item.classList.toggle('list-group-item-success');
+        taskObj.done = !taskObj.done;
       });
 
       todoItem.deleteButton.addEventListener('click', function() {
