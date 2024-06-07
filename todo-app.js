@@ -17,6 +17,17 @@
     buttonWrapper.classList.add('input-group-append');
     button.classList.add('btn', 'btn-primary');
     button.textContent = 'Add a new task'
+    button.disabled = true;
+
+    function checkInputValue() {
+      if(input.value.trim() === '') {
+        button.disabled = true;
+      }else {
+        button.disabled = false;
+      }
+    }
+
+    input.addEventListener('input', checkInputValue);
 
     buttonWrapper.append(button);
     form.append(input);
@@ -26,6 +37,7 @@
       form, 
       input,
       button,
+      checkInputValue,
     };
   }
 
@@ -99,6 +111,8 @@
       todoList.append(todoItem.item);
 
       todoItemForm.input.value = '';
+
+      todoItemForm.checkInputValue();
     });
   }
 
