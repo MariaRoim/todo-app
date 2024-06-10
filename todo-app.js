@@ -1,4 +1,6 @@
 (function () {
+  let tasks = [];
+
   function createAppTitle(title) {
     let appTitle = document.createElement('h2');
     appTitle.innerHTML = title;
@@ -89,13 +91,22 @@
         return;
       }
 
+      function genrateRandomTaskId() {
+        randomId = Math.floor(Math.random() * 100)
+        return randomId
+      }
+
       let taskObj = {
         name: todoItemForm.input.value,
         done: false,
+        id: genrateRandomTaskId()
       }
-      console.log(taskObj)
 
       let todoItem = createTodoItem(taskObj);
+
+      tasks.push(taskObj);
+      console.log(tasks);
+    
       
       todoItem.doneButton.addEventListener('click', function() {
         todoItem.item.classList.toggle('list-group-item-success');
