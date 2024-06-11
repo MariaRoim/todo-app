@@ -116,6 +116,8 @@
       todoItem.deleteButton.addEventListener('click', function() {
         if (confirm('Are you sure?')) {
           todoItem.item.remove();
+          let taskId = taskObj.id;
+          tasks = tasks.filter(el => el.id !== taskId);
         }
       });
 
