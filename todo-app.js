@@ -75,7 +75,13 @@
     };
   }
 
-  function createTodoApp(container, title = 'To-do list') {
+  function saveDataToLocalStorage (key, array) {
+    localStorage.setItem(key, JSON.stringify(array));
+  }
+
+  function createTodoApp(container, title = 'To-do list', listName) {
+    key = listName;
+
     let todoAppTitle = createAppTitle(title);
     let todoItemForm = createTodoItemForm();
     let todoList = createTodoList();
@@ -105,12 +111,13 @@
       let todoItem = createTodoItem(taskObj);
 
       tasks.push(taskObj);
-      console.log(tasks);
+      saveDataToLocalStorage(key, tasks);
     
       
       todoItem.doneButton.addEventListener('click', function() {
         todoItem.item.classList.toggle('list-group-item-success');
         taskObj.done = !taskObj.done;
+        saveDataToLocalStorage(key, tasks);
       });
 
       todoItem.deleteButton.addEventListener('click', function() {
@@ -118,6 +125,7 @@
           todoItem.item.remove();
           let taskId = taskObj.id;
           tasks = tasks.filter(el => el.id !== taskId);
+          saveDataToLocalStorage(key, tasks);
         }
       });
 
