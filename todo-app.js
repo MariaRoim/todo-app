@@ -1,5 +1,7 @@
 (function () {
   let tasks = [];
+  
+  let key = '';
 
   function createAppTitle(title) {
     let appTitle = document.createElement('h2');
@@ -79,6 +81,10 @@
     localStorage.setItem(key, JSON.stringify(array));
   }
 
+  function getDataFromLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
+  }
+
   function createTodoApp(container, title = 'To-do list', listName) {
     key = listName;
 
@@ -89,6 +95,31 @@
     container.append(todoAppTitle);
     container.append(todoItemForm.form);
     container.append(todoList);
+
+    let savedTasks = getDataFromLocalStorage(key);
+    if (savedTasks) {
+      tasks = savedTasks;
+      tasks.forEach(taskObj => {
+        let todoItem = createTodoItem(taskObj);
+
+        todoItem.doneButton.addEventListener('click', function () {
+          todoItem.item.classList.toggle('list-group-item-success');
+          taskObj.done = !taskObj.done;
+          saveDataToLocalStorage(key, tasks);
+        });
+
+        todoItem.deleteButton.addEventListener('click', function () {
+          if (confirm('Are you sure?')) {
+            todoItem.item.remove();
+            let taskId = taskObj.id;
+            tasks = tasks.filter(el => el.id !== taskId);
+            saveDataToLocalStorage(key, tasks);
+          }
+        });
+
+        todoList.append(todoItem.item);
+      });
+    }
 
     todoItemForm.form.addEventListener('submit', function(e) {
       e.preventDefault();
