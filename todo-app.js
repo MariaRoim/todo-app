@@ -1,6 +1,6 @@
 (function () {
   let tasks = [];
-  
+
   let key = '';
 
   function createAppTitle(title) {
@@ -62,6 +62,9 @@
 
     buttonGroup.classList.add('btn-group', 'btn-group-sm');
     doneButton.classList.add('btn', 'btn-success');
+    if (taskObj.done) {
+      item.classList.add('list-group-item-success');
+    }
     doneButton.textContent = 'Done';
     deleteButton.classList.add('btn', 'btn-danger');
     deleteButton.textContent = 'Delete';
