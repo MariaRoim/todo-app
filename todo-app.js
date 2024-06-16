@@ -1,8 +1,6 @@
 (function () {
   let tasks = [];
 
-  let key = '';
-
   function createAppTitle(title) {
     let appTitle = document.createElement('h2');
     appTitle.innerHTML = title;
@@ -24,9 +22,9 @@
     button.disabled = true;
 
     function checkInputValue() {
-      if(input.value.trim() === '') {
+      if (input.value.trim() === '') {
         button.disabled = true;
-      }else {
+      } else {
         button.disabled = false;
       }
     }
@@ -38,7 +36,7 @@
     form.append(buttonWrapper);
 
     return {
-      form, 
+      form,
       input,
       button,
       checkInputValue,
@@ -80,7 +78,7 @@
     };
   }
 
-  function saveDataToLocalStorage (key, array) {
+  function saveDataToLocalStorage(key, array) {
     localStorage.setItem(key, JSON.stringify(array));
   }
 
@@ -89,7 +87,7 @@
   }
 
   function createTodoApp(container, title = 'To-do list', listName) {
-    key = listName;
+    let key = listName;
 
     let todoAppTitle = createAppTitle(title);
     let todoItemForm = createTodoItemForm();
@@ -124,7 +122,7 @@
       });
     }
 
-    todoItemForm.form.addEventListener('submit', function(e) {
+    todoItemForm.form.addEventListener('submit', function (e) {
       e.preventDefault();
 
       if (!todoItemForm.input.value) {
@@ -146,15 +144,15 @@
 
       tasks.push(taskObj);
       saveDataToLocalStorage(key, tasks);
-    
-      
-      todoItem.doneButton.addEventListener('click', function() {
+
+
+      todoItem.doneButton.addEventListener('click', function () {
         todoItem.item.classList.toggle('list-group-item-success');
         taskObj.done = !taskObj.done;
         saveDataToLocalStorage(key, tasks);
       });
 
-      todoItem.deleteButton.addEventListener('click', function() {
+      todoItem.deleteButton.addEventListener('click', function () {
         if (confirm('Are you sure?')) {
           todoItem.item.remove();
           let taskId = taskObj.id;
